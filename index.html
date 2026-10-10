@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XYZARCRAFT &mdash; RPG Minecraft Modpack</title>
+  <meta name="description" content="Xyzarcraft: Modpack de RPG imersivo para Minecraft. Otimizado, combate renovado e compatibilidade total com TLauncher.">
+  
+  <!-- Fontes Premium -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="stylesheet" href="style.css">
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <!-- Canvas 3D de Fundo / Objeto Central -->
+  <div id="webgl-container"></div>
+
+  <!-- Ruído granulado cinematográfico de fundo (subtle film grain) -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- Header / Barra de Navegação Minimalista -->
+  <header class="site-header">
+    <a href="#" class="brand" title="Xyzarcraft RPG Modpack">
+      <img src="logo.png" alt="Xyzarcraft Logo" class="brand-logo-img">
+    </a>
+
+    <nav class="nav-links">
+      <a href="#experiencia" class="nav-link">O Modpack</a>
+      <a href="#tlauncher" class="nav-link">TLauncher</a>
+      <a href="#downloads" class="nav-link highlight">Download</a>
+    </nav>
+
+    <div class="server-pill" id="copyIpBtn" title="Clique para copiar o IP do Servidor">
+      <span class="status-indicator"></span>
+      <span class="server-ip-text">jogar.xyzarcraft.net</span>
+      <span class="copy-badge">COPIAR</span>
+    </div>
+  </header>
+
+  <!-- Seção Hero: Minimalismo radical com foco na peça 3D -->
+  <main>
+    <section class="hero-section">
+      <div class="hero-badge">
+        <span class="badge-icon">&#10022;</span>
+        <span>COMPATÍVEL COM TLAUNCHER &amp; ORIGINAL &bull; FORGE 1.20.1</span>
+      </div>
+
+      <h1 class="hero-title">
+        EXPLORE O ABISMO.<br>
+        <span class="accent-text">CONQUISTE O REINO.</span>
+      </h1>
+
+      <p class="hero-desc">
+        Um modpack de RPG hardcore feito sob medida: progressão por classes, combate com esquiva ativa, 
+        dungeons procedurais e zero poluição visual. Otimizado para rodar a 60+ FPS a partir de 4GB de RAM.
+      </p>
+
+      <div class="hero-actions">
+        <a href="XyzarCraft-Modpack.zip" download="XyzarCraft-Modpack.zip" class="btn btn-primary" id="heroModpackBtn" onclick="triggerDownload('modpack')">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span>Baixar Modpack</span>
+          <span class="btn-detail">.ZIP</span>
+        </a>
+
+        <a href="XyzarCraft.exe.zip" download="XyzarCraft.exe.zip" class="btn btn-secondary" id="heroLauncherBtn" onclick="triggerDownload('launcher')">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          <span>Launcher Direto</span>
+          <span class="btn-detail">XyzarCraft.exe.zip</span>
+        </a>
+      </div>
+
+      <!-- Quick specs minimalistas em linha -->
+      <div class="quick-meta">
+        <div class="meta-item">
+          <span class="meta-label">Versão Base</span>
+          <span class="meta-value">Minecraft 1.20.1</span>
+        </div>
+        <div class="meta-sep">/</div>
+        <div class="meta-item">
+          <span class="meta-label">Engine</span>
+          <span class="meta-value">Forge 47.3+</span>
+        </div>
+        <div class="meta-sep">/</div>
+        <div class="meta-item">
+          <span class="meta-label">Compatibilidade</span>
+          <span class="meta-value highlight-green">TLauncher Pronto</span>
+        </div>
+        <div class="meta-sep">/</div>
+        <div class="meta-item">
+          <span class="meta-label">RAM Recomendada</span>
+          <span class="meta-value">4 GB &mdash; 6 GB</span>
+        </div>
+      </div>
+
+      <!-- Hint para interação 3D -->
+      <div class="interactive-hint">
+        <span class="mouse-icon"></span>
+        <span>Arraste com o mouse para orbitar o fragmento ancestral</span>
+      </div>
+    </section>
+
+    <!-- Seção de Recursos Essenciais (Sem poluição, grid limpo) -->
+    <section class="section features-section" id="experiencia">
+      <div class="section-header">
+        <span class="section-tag">SISTEMA RPG</span>
+        <h2 class="section-title">O que muda na sua jornada?</h2>
+      </div>
+
+      <div class="clean-grid">
+        <div class="feature-card">
+          <div class="card-num">01</div>
+          <h3>Combate Soulslike</h3>
+          <p>Esquiva direcional ativa, barra de postura e armas com conjuntos de movimentos únicos. Ataques sincronizados e parry em chefes lendários.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="card-num">02</div>
+          <h3>Árvore de Talentos &amp; Classes</h3>
+          <p>Evolua sem amarras: escolha entre Arcanista, Paladino, Algoz ou Caçador de Feras. Distribua atributos a cada nível conquistado.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="card-num">03</div>
+          <h3>Performance Impecável</h3>
+          <p>Integrado com shaders leves, Sodium/Embeddium e culling avançado. Sem engasgos de memória e inicialização em menos de 40 segundos.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="card-num">04</div>
+          <h3>Mundo &amp; Dungeons Vivas</h3>
+          <p>Estruturas colossais subterrâneas, chefes com mecânicas próprias e loot balanceado que recompensa a exploração de perigo alto.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção TLauncher & Compatibilidade (Fácil, sem burocracia) -->
+    <section class="section tlauncher-section" id="tlauncher">
+      <div class="tlauncher-box">
+        <div class="tlauncher-content">
+          <div class="badge-tl">
+            <span class="tl-dot"></span>
+            <span>TLAUNCHER COMPATIBLE</span>
+          </div>
+          <h2>Como jogar no TLauncher em 4 passos</h2>
+          <p class="tl-subtitle">Nenhuma complicação. Tudo configurado para você entrar sem erros de inicialização.</p>
+
+          <div class="steps-flow">
+            <div class="step-item">
+              <span class="step-badge">1</span>
+              <div>
+                <strong>Selecione Forge 1.20.1</strong>
+                <p>No seletor de versões do TLauncher, escolha <code>Forge 1.20.1</code> e clique em instalar.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <span class="step-badge">2</span>
+              <div>
+                <strong>Cole a pasta do Modpack</strong>
+                <p>Baixe o arquivo <code>XyzarCraft-Modpack.zip</code> e extraia os arquivos dentro da sua pasta <code>.minecraft</code>.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <span class="step-badge">3</span>
+              <div>
+                <strong>Instale o Launcher Direto</strong>
+                <p>É necessário instalar o launcher direto (<code>XyzarCraft.exe.zip</code>) para abrir e sincronizar o modpack corretamente.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <span class="step-badge">4</span>
+              <div>
+                <strong>Inicie o Launcher Direto</strong>
+                <p>Abra o launcher direto instalado, clique em jogar e aproveite a sua jornada sem erros de compatibilidade!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tlauncher-aside">
+          <div class="tl-card-preview">
+            <div class="tl-card-header">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="tl-title">Configuração Automática</span>
+            </div>
+            <pre class="tl-code"><code>[Xyzarcraft Config]
+status = "OK"
+forge_version = "47.3.0"
+shaders = "Inclusos &amp; Otimizados"
+compatibilidade = "100% TLauncher"
+servidor_ip = "jogar.xyzarcraft.net"</code></pre>
+            <div class="tl-card-footer">
+              <span>Testado e aprovado em contas originais &amp; TLauncher</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção de Downloads Principal -->
+    <section class="section downloads-section" id="downloads">
+      <div class="section-header center">
+        <span class="section-tag">ÁREA DE ARQUIVOS</span>
+        <h2 class="section-title">Escolha seu método de instalação</h2>
+        <p class="section-desc">Downloads diretos, hospedagem de alta velocidade e sem encurtadores irritantes.</p>
+      </div>
+
+      <div class="downloads-grid">
+        <!-- Opção 1: Modpack ZIP -->
+        <div class="download-card primary">
+          <div class="card-ribbon">RECOMENDADO</div>
+          <div class="card-head">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                <line x1="12" y1="22.08" x2="12" y2="12"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Modpack Completo (.zip)</h3>
+              <p>Arquivo: <code>XyzarCraft-Modpack.zip</code> (Compatível com TLauncher)</p>
+            </div>
+          </div>
+
+          <div class="card-specs">
+            <div class="spec-row">
+              <span>Arquivo</span>
+              <strong style="color:var(--accent-gold);">XyzarCraft-Modpack.zip</strong>
+            </div>
+            <div class="spec-row">
+              <span>Versão do Pacote</span>
+              <strong>v1.6.4 Release</strong>
+            </div>
+            <div class="spec-row">
+              <span>Mods Inclusos</span>
+              <strong>128 mods (Otimizados)</strong>
+            </div>
+            <div class="spec-row">
+              <span>Hash SHA-256</span>
+              <code class="hash-code">a94f8b2c...61e0</code>
+            </div>
+          </div>
+
+          <a href="XyzarCraft-Modpack.zip" download="XyzarCraft-Modpack.zip" class="btn btn-primary full-width" onclick="triggerDownload('modpack')">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>Baixar Modpack (.ZIP)</span>
+          </a>
+        </div>
+
+        <!-- Opção 2: Instalador / Launcher -->
+        <div class="download-card">
+          <div class="card-head">
+            <div class="icon-wrap secondary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Launcher Direto (.zip)</h3>
+              <p>Arquivo: <code>XyzarCraft.exe.zip</code> (Obrigatório p/ TLauncher)</p>
+            </div>
+          </div>
+
+          <div class="card-specs">
+            <div class="spec-row">
+              <span>Arquivo</span>
+              <strong style="color:var(--accent-gold);">XyzarCraft.exe.zip</strong>
+            </div>
+            <div class="spec-row">
+              <span>Compatibilidade</span>
+              <strong>Windows 10 / 11 (64-bit)</strong>
+            </div>
+            <div class="spec-row">
+              <span>Java 17</span>
+              <strong>Embutido (Auto-instala)</strong>
+            </div>
+            <div class="spec-row">
+              <span>Sincronização</span>
+              <strong>Abre o modpack corretamente</strong>
+            </div>
+          </div>
+
+          <a href="XyzarCraft.exe.zip" download="XyzarCraft.exe.zip" class="btn btn-secondary full-width" onclick="triggerDownload('launcher')">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>Baixar Launcher Direto (.ZIP)</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé Minimalista -->
+  <footer class="site-footer">
+    <div class="footer-left">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Xyzarcraft Logo" class="footer-logo-img">
+      </div>
+      <span class="footer-copy">&copy; 2026 Xyzarcraft RPG. Não afiliado à Mojang Studios.</span>
+    </div>
+
+    <div class="footer-right">
+      <a href="#tlauncher" class="footer-link">Guia TLauncher</a>
+      <a href="https://discord.gg" target="_blank" rel="noopener" class="footer-link">Discord da Comunidade</a>
+      <a href="#downloads" class="footer-link">Downloads</a>
+    </div>
+  </footer>
+
+  <!-- Toast de Notificação Suave -->
+  <div id="toast" class="toast" role="alert" aria-live="polite">
+    <span class="toast-icon">&#10003;</span>
+    <span class="toast-message" id="toastMessage">IP copiado com sucesso!</span>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
